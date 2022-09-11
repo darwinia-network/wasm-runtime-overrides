@@ -1,6 +1,7 @@
 from datetime import datetime
 import json
 import os
+import re
 import requests
 import subprocess
 import sys
@@ -58,7 +59,7 @@ for rt in rts[repo]:
     else:
         tag_ = f'v{v[0]}-{v[1]}'
 
-    if tag != tag_:
+    if re.search(r'v\d+.\d+.\d+-\d+', tag).group() != tag_:
         subprocess.run(['runtime-overrides', '-r', rt, '-t', tag, '-o', '.'])
         new_rts.append(f'{rt}-{tag}')
 
